@@ -20,17 +20,6 @@ pipeline {
  	
  	//Aquí comienzan los “items” del Pipeline
 	stages{
-		stage('Checkout') {
-			steps{
-				echo "------------>Checkout<------------"
-				checkout([$class: 'GitSCM', branches: [[name: '*/master']],
-				doGenerateSubmoduleConfigurations: false, extensions: [], gitTool:
-				'Git_Centos', submoduleCfg: [], userRemoteConfigs: [[credentialsId:
-				'GitHub_cricalonos', url:
-				'https://github.com/cricalonos/estacionamiento']]])
-				sh 'gradle clean'
-			}
-		}
 		stage('Unit Tests') {
 			steps{
 				echo "------------>Unit Tests<------------"
