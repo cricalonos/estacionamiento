@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.ceiba.estacionamiento.dto.RespuestaDTO;
+import co.com.ceiba.estacionamiento.exception.EstacionamientoException;
 import co.com.ceiba.estacionamiento.model.VehiculoModel;
-import co.com.ceiba.estacionamiento.service.VehiculoService;
+import co.com.ceiba.estacionamiento.service.EstacionamientoService;
 
 /**
  * @author cristian.londono
@@ -15,13 +17,16 @@ import co.com.ceiba.estacionamiento.service.VehiculoService;
 @RestController
 public class EstacionamientoController {
 
-	@Autowired
-	@Qualifier("vehiculoServiceImpl")
-	VehiculoService vehiculoService;
+    @Autowired
+    @Qualifier("vehiculoServiceImpl")
+    EstacionamientoService vehiculoService;
 
-	@PostMapping("/registrarIngreso")
-	public VehiculoModel registrarIngreso(@RequestBody VehiculoModel vehiculoModel) {
-		vehiculoService.agregarVehiculo(vehiculoModel);
-		return vehiculoModel;
-	}
+    @PostMapping("/registrarIngreso")
+    public RespuestaDTO registrarIngresoAlEstacionamiento(@RequestBody VehiculoModel vehiculoModel) {
+        try {
+            return vehiculoService.registrarIngresoAlEstacionamiento(vehiculoModel);
+        } catch (EstacionamientoException e) {
+            return new RespuestaDTO(e.getCodigo(), e.getMensaje());
+        }
+    }
 }

@@ -10,20 +10,25 @@ import co.com.ceiba.estacionamiento.model.VehiculoModel;
 import co.com.ceiba.estacionamiento.repository.VehiculoRepository;
 import co.com.ceiba.estacionamiento.service.VehiculoService;
 
-@Service("vehiculoServiceImpl")
+@Service("vehiculoService")
 public class VehiculoServiceImpl implements VehiculoService {
 
-	@Autowired
-	@Qualifier("vehiculoRepository")
-	private VehiculoRepository vehiculoRepository;
+    @Autowired
+    @Qualifier("vehiculoRepository")
+    VehiculoRepository vehiculoRepository;
 
-	@Autowired
-	@Qualifier("vehiculoConverter")
-	private VehiculoConverter vehiculoConverter;
+    @Autowired
+    @Qualifier("vehiculoConverter")
+    VehiculoConverter vehiculoConverter;
 
-	public VehiculoModel agregarVehiculo(VehiculoModel vehiculoModel) {
-		Vehiculo vehiculo = vehiculoRepository.save(vehiculoConverter.convertirModeloAEntidad(vehiculoModel));
-		return vehiculoConverter.convertirEntidadAModelo(vehiculo);
-	}
+    public Vehiculo verificarVehiculo(VehiculoModel vehiculoModel) {
+        Vehiculo vehiculo = vehiculoRepository.findByPlaca(vehiculoModel.getPlaca());
+
+        if (vehiculo == null) {
+            vehiculo = vehiculoRepository.save(vehiculoConverter.convertirModeloAEntidad(vehiculoModel));
+        }
+
+        return vehiculo;
+    }
 
 }

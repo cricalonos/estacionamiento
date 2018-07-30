@@ -1,64 +1,42 @@
 package co.com.ceiba.estacionamiento.model;
 
-import java.util.Date;
-
 public class VehiculoModel {
 
-	private Long idVehiculo;
-	private String placa;
-	private String tipo;
-	private Date fechaIngreso;
-	private Date fechaSalida;
+    private String placa;
+    private String tipo;
+    private Integer cilindraje;
 
-	public VehiculoModel() {
-	}
+    public VehiculoModel() {
+    }
 
-	public VehiculoModel(Long idVehiculo, String placa, String tipo, Date fechaIngreso, Date fechaSalida) {
-		this.idVehiculo = idVehiculo;
-		this.placa = placa;
-		this.tipo = tipo;
-		this.fechaIngreso = fechaIngreso;
-		this.fechaSalida = fechaSalida;
-	}
+    public VehiculoModel(String placa, String tipo, Integer cilindraje) {
+        this.placa = placa;
+        this.tipo = tipo;
+        this.cilindraje = cilindraje;
+    }
 
-	public Long getIdVehiculo() {
-		return idVehiculo;
-	}
+    public String getPlaca() {
+        return placa;
+    }
 
-	public void setIdVehiculo(Long idVehiculo) {
-		this.idVehiculo = idVehiculo;
-	}
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
-	public String getPlaca() {
-		return placa;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public Integer getCilindraje() {
+        return cilindraje;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
-	public Date getFechaSalida() {
-		return fechaSalida;
-	}
-
-	public void setFechaSalida(Date fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
+    public void setCilindraje(Integer cilindraje) {
+        this.cilindraje = cilindraje;
+    }
 
 }
