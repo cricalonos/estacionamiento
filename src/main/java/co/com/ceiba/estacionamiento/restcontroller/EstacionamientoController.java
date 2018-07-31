@@ -1,5 +1,7 @@
 package co.com.ceiba.estacionamiento.restcontroller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,8 @@ import co.com.ceiba.estacionamiento.service.EstacionamientoService;
 @RestController
 public class EstacionamientoController {
 
+    private static final Log LOGGER = LogFactory.getLog(EstacionamientoController.class);
+
     @Autowired
     @Qualifier("vehiculoServiceImpl")
     EstacionamientoService vehiculoService;
@@ -26,6 +30,7 @@ public class EstacionamientoController {
         try {
             return vehiculoService.registrarIngresoAlEstacionamiento(vehiculoModel);
         } catch (EstacionamientoException e) {
+            LOGGER.error(e);
             return new RespuestaDTO(e.getCodigo(), e.getMensaje());
         }
     }
