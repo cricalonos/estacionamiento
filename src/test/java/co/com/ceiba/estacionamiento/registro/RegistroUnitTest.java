@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,6 +31,7 @@ import co.com.ceiba.estacionamiento.util.Constantes;
 import co.com.ceiba.estacionamiento.util.FechaUtil;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @RunWith(SpringRunner.class)
 public class RegistroUnitTest {
 
@@ -107,7 +110,7 @@ public class RegistroUnitTest {
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
         Calendar fecha = Calendar.getInstance();
         fecha.set(2018, 6, 29);
-        when(fechaUtil.obtenerFechaActual()).thenReturn(Calendar.getInstance());
+        when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
         try {
             // Act
             estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
