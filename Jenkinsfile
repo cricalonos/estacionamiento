@@ -25,7 +25,7 @@ pipeline {
 				echo "------------>Unit Tests<------------"
 				sh 'gradle clean'
 				sh 'gradle test --stacktrace'
-				junit '**/build/jacoco/test-results/test/*.xml' //aggregate test results - JUnit
+				junit '**/build/jacoco/test-results/*.xml' //aggregate test results - JUnit
 				jacoco classPattern:'**/build/classes/java', execPattern:'**/build/jacoco/jacocoTest.exec', sourcePattern:'**/src/main/java'
 			}
 		}
@@ -49,7 +49,7 @@ pipeline {
 	post {
 		success {
 			echo 'This will run only if successful'
-			junit '**/build/jacoco/test-results/test/*.xml'
+			junit '**/build/jacoco/test-results/*.xml'
 		}
 		failure {
 			echo 'This will run only if failed'
