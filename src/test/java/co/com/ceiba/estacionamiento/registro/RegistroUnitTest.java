@@ -167,7 +167,7 @@ public class RegistroUnitTest {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().build();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
-        when(estacionamientoRepository.findByVehiculoPlaca(any())).thenReturn(new RegistroEstacionamiento());
+        when(estacionamientoRepository.findByVehiculoPlacaAndFechaSalidaNull(any())).thenReturn(new RegistroEstacionamiento());
         when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
         when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
         try {

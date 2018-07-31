@@ -11,5 +11,5 @@ public interface EstacionamientoRepository extends JpaRepository<RegistroEstacio
 
     public Integer countByFechaSalidaAndVehiculoTipoVehiculo(Date fechaSalida, TipoVehiculoEnum tipoVehiculo);
 
-    public RegistroEstacionamiento findByVehiculoPlaca(String placa);
+    public RegistroEstacionamiento findByVehiculoPlacaAndFechaSalidaNull(String placa);
 }

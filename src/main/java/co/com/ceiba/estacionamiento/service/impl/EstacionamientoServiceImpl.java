@@ -55,7 +55,7 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
         if (!validarEspaciosDisponibles(vehiculoModel.getTipo()))
             throw new EstacionamientoException(CodigoMensajeEnum.NO_HAY_ESPACIO_DISPONIBLE);
 
-        if (estacionamientoRepository.findByVehiculoPlaca(vehiculoModel.getPlaca()) != null)
+        if (estacionamientoRepository.findByVehiculoPlacaAndFechaSalidaNull(vehiculoModel.getPlaca()) != null)
             throw new EstacionamientoException(CodigoMensajeEnum.VEHICULO_YA_ESTACIONADO);
 
         Vehiculo vehiculo = vehiculoService.verificarVehiculo(vehiculoModel);
