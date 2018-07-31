@@ -23,6 +23,7 @@ pipeline {
 		stage('Unit Tests') {
 			steps{
 				echo "------------>Unit Tests<------------"
+				sh 'gradle clean'
 				sh 'gradle test --stacktrace'
 				junit '**/build/jacoco/test-results/test/*.xml' //aggregate test results - JUnit
 				jacoco classPattern:'**/build/classes/java', execPattern:'**/build/jacoco/jacocoTest.exec', sourcePattern:'**/src/main/java'
