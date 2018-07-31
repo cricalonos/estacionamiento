@@ -50,7 +50,7 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
 
     public RespuestaDTO registrarIngresoAlEstacionamiento(VehiculoModel vehiculoModel) throws EstacionamientoException {
 
-        if (fechaUtil.validarDiaDeLaSemana(fechaUtil.obtenerFechaActual()) && vehiculoModel.getPlaca().startsWith("A"))
+        if (!fechaUtil.validarDiaDeLaSemana(fechaUtil.obtenerFechaActual()) && vehiculoModel.getPlaca().startsWith("A"))
             throw new EstacionamientoException(CodigoMensajeEnum.NO_AUTORIZADO_PARA_INGRESO);
 
         if (!validarEspaciosDisponibles(vehiculoModel.getTipo()))

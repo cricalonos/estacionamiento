@@ -57,9 +57,6 @@ public class RegistroUnitTest {
         VehiculoModel vehiculo = new VehiculoBuilder().build();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
         when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
-        Calendar fecha = Calendar.getInstance();
-        fecha.set(2018, Calendar.JULY, 24);
-        when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
         try {
             // Act
             RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
@@ -106,7 +103,7 @@ public class RegistroUnitTest {
     @Test
     public void falloPorLetraDePlaca() {
         // Arrange
-        VehiculoModel vehiculo = new VehiculoBuilder().build();
+        VehiculoModel vehiculo = new VehiculoBuilder().conPlaca("AAA000").build();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
         Calendar fecha = Calendar.getInstance();
         fecha.set(2018, 6, 29);

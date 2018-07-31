@@ -10,7 +10,7 @@ public class VehiculoBuilder {
     private Integer cilindraje;
 
     public VehiculoBuilder() {
-        this.placa = "ASH02";
+        this.placa = "XEH85D";
         this.tipo = "CARRO";
         this.cilindraje = 0;
     }
