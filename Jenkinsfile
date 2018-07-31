@@ -24,7 +24,7 @@ pipeline {
 			steps{
 				echo "------------>Unit Tests<------------"
 				sh 'gradle test --stacktrace'
-				junit '**/build/test-results/test/*.xml' //aggregate test results - JUnit
+				junit '**/build/jacoco/test-results/test/*.xml' //aggregate test results - JUnit
 				jacoco classPattern:'**/build/classes/java', execPattern:'**/build/jacoco/test.exec', sourcePattern:'**/src/main/java'
 			}
 		}
