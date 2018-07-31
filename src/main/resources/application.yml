@@ -16,3 +16,4 @@ spring:
       encoding:
          charset: UTF-8
          enabled: true
+         force: true
