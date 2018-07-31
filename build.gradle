@@ -27,9 +27,9 @@ repositories {
 test {
 	jacoco {
 		append = false
-		destinationFile = file("jacoco/jacocoTest.exec")
+		destinationFile = file("build/jacoco/jacocoTest.exec")
 	}
-	reports.junitXml.destination =  file("jacoco/test-results")
+	reports.junitXml.destination =  file("build/jacoco/test-results")
 }
 
 dependencies {
