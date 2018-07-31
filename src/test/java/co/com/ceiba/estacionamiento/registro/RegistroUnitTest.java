@@ -57,6 +57,8 @@ public class RegistroUnitTest {
         VehiculoModel vehiculo = new VehiculoBuilder().build();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
         when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
+        when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
+        when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
         try {
             // Act
             RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
@@ -72,6 +74,8 @@ public class RegistroUnitTest {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().conTipo(TipoVehiculoEnum.CARRO).build();
 
+        when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
+        when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any()))
                 .thenReturn(Constantes.CAPACIDAD_MAXIMA_CARROS);
         try {
@@ -101,13 +105,53 @@ public class RegistroUnitTest {
     }
 
     @Test
-    public void falloPorLetraDePlaca() {
+    public void exitoPorLetraDePlacaDomingo() {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().conPlaca("AAA000").build();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
         Calendar fecha = Calendar.getInstance();
         fecha.set(2018, 6, 29);
         when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
+        when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
+        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
+        when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
+        try {
+            // Act
+            RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
+            // Assert
+            assertEquals(CodigoMensajeEnum.EXITO.getCodigo(), respuesta.getCodigo());
+        } catch (EstacionamientoException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void exitoPorLetraDePlacaLunes() {
+        // Arrange
+        VehiculoModel vehiculo = new VehiculoBuilder().conPlaca("AAA000").conTipo(TipoVehiculoEnum.MOTO).build();
+        Calendar fecha = Calendar.getInstance();
+        fecha.set(2018, Calendar.JULY, 30);
+        when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
+        when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
+        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
+        when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
+        try {
+            // Act
+            RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
+            // Assert
+            assertEquals(CodigoMensajeEnum.EXITO.getCodigo(), respuesta.getCodigo());
+        } catch (EstacionamientoException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void falloPorLetraDePlaca() {
+        // Arrange
+        VehiculoModel vehiculo = new VehiculoBuilder().conPlaca("AAA000").build();
+        Calendar fecha = Calendar.getInstance();
+        fecha.set(2018, Calendar.JULY, 31);
+        when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
+        when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
         try {
             // Act
             estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
@@ -124,6 +168,8 @@ public class RegistroUnitTest {
         VehiculoModel vehiculo = new VehiculoBuilder().build();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
         when(estacionamientoRepository.findByVehiculoPlaca(any())).thenReturn(new RegistroEstacionamiento());
+        when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
+        when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
         try {
             // Act
             estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);

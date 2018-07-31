@@ -4,12 +4,12 @@ import java.util.Calendar;
 
 import org.springframework.stereotype.Component;
 
-@Component("fechaUtil")
+@Component
 public class FechaUtil {
 
     public boolean validarDiaDeLaSemana(Calendar fecha) {
         int diaDeLaSemana = fecha.get(Calendar.DAY_OF_WEEK);
-        return diaDeLaSemana == Calendar.MONDAY || diaDeLaSemana == Calendar.SUNDAY;
+        return (diaDeLaSemana == Calendar.MONDAY || diaDeLaSemana == Calendar.SUNDAY);
     }
 
     public Calendar obtenerFechaActual() {

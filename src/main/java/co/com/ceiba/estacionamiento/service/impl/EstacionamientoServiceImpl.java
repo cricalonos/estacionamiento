@@ -36,7 +36,6 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
     private VehiculoConverter vehiculoConverter;
 
     @Autowired
-    @Qualifier("fechaUtil")
     private FechaUtil fechaUtil;
 
     public EstacionamientoServiceImpl(VehiculoService vehiculoService,
@@ -50,7 +49,7 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
 
     public RespuestaDTO registrarIngresoAlEstacionamiento(VehiculoModel vehiculoModel) throws EstacionamientoException {
 
-        if (!fechaUtil.validarDiaDeLaSemana(fechaUtil.obtenerFechaActual()) && vehiculoModel.getPlaca().startsWith("A"))
+        if (!validarPlacaPorLetra(vehiculoModel.getPlaca()))
             throw new EstacionamientoException(CodigoMensajeEnum.NO_AUTORIZADO_PARA_INGRESO);
 
         if (!validarEspaciosDisponibles(vehiculoModel.getTipo()))
@@ -72,6 +71,14 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
             respuesta.setMensaje(CodigoMensajeEnum.ERROR.getMensaje());
         }
         return respuesta;
+    }
+
+    private boolean validarPlacaPorLetra(String placa) {
+        boolean esValido = true;
+        if (placa.startsWith("A")) {
+            esValido = fechaUtil.validarDiaDeLaSemana(fechaUtil.obtenerFechaActual());
+        }
+        return esValido;
     }
 
     private boolean validarEspaciosDisponibles(String tipoVehiculo) {
