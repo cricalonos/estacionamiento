@@ -31,4 +31,8 @@ public class VehiculoServiceImpl implements VehiculoService {
         return vehiculo;
     }
 
+    public VehiculoModel consultarVehiculoPorPlaca(String placa) {
+        return vehiculoConverter.convertirEntidadAModelo(vehiculoRepository.findByPlaca(placa));
+    }
+
 }

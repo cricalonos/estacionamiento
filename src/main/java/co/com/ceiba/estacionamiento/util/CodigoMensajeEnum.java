@@ -2,11 +2,13 @@ package co.com.ceiba.estacionamiento.util;
 
 public enum CodigoMensajeEnum {
 
-    EXITO("00", "Acción realizada exitosamente."), ERROR("01", "Error realizando la acción."),
+    INGRESO_EXITOSO("00", "Acción realizada exitosamente."), ERROR("01", "Error realizando la acción."),
     NO_HAY_ESPACIO_DISPONIBLE("03", "No hay espacio disponible para el vehículo."),
     NO_AUTORIZADO_PARA_INGRESO("04", "No está autorizado a ingresar."),
     CILINDRAJE_ES_OBLIGATORIO("05", "Debe ingresar un cilindraje."),
-    VEHICULO_YA_ESTACIONADO("06", "Este vehículo ya se encuentra en el estacionamiento.");
+    VEHICULO_YA_ESTACIONADO("06", "Este vehículo ya se encuentra en el estacionamiento."),
+    SALIDA_EXITOSA("07", "Salida de vehículo registrada exitosamente."),
+    VEHICULO_NO_ESTACIONADO("08", "El vehículo no se encuentra en el estacionamiento.");
 
     private String codigo;
     private String mensaje;

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import co.com.ceiba.estacionamiento.converter.VehiculoConverter;
 import co.com.ceiba.estacionamiento.dto.RespuestaDTO;
 import co.com.ceiba.estacionamiento.entity.RegistroEstacionamiento;
 import co.com.ceiba.estacionamiento.entity.TipoVehiculoEnum;
@@ -14,14 +13,14 @@ import co.com.ceiba.estacionamiento.entity.Vehiculo;
 import co.com.ceiba.estacionamiento.exception.EstacionamientoException;
 import co.com.ceiba.estacionamiento.model.VehiculoModel;
 import co.com.ceiba.estacionamiento.repository.EstacionamientoRepository;
-import co.com.ceiba.estacionamiento.service.EstacionamientoService;
+import co.com.ceiba.estacionamiento.service.IngresoVehiculoService;
 import co.com.ceiba.estacionamiento.service.VehiculoService;
 import co.com.ceiba.estacionamiento.util.CodigoMensajeEnum;
 import co.com.ceiba.estacionamiento.util.Constantes;
 import co.com.ceiba.estacionamiento.util.FechaUtil;
 
-@Service("vehiculoServiceImpl")
-public class EstacionamientoServiceImpl implements EstacionamientoService {
+@Service("ingresoVehiculoService")
+public class IngresoVehiculoServiceImpl implements IngresoVehiculoService {
 
     @Autowired
     @Qualifier("estacionamientoRepository")
@@ -32,18 +31,12 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
     private VehiculoService vehiculoService;
 
     @Autowired
-    @Qualifier("vehiculoConverter")
-    private VehiculoConverter vehiculoConverter;
-
-    @Autowired
     private FechaUtil fechaUtil;
 
-    public EstacionamientoServiceImpl(VehiculoService vehiculoService,
-            EstacionamientoRepository estacionamientoRepository, VehiculoConverter vehiculoConverter,
-            FechaUtil fechaUtil) {
+    public IngresoVehiculoServiceImpl(VehiculoService vehiculoService,
+            EstacionamientoRepository estacionamientoRepository, FechaUtil fechaUtil) {
         this.vehiculoService = vehiculoService;
         this.estacionamientoRepository = estacionamientoRepository;
-        this.vehiculoConverter = vehiculoConverter;
         this.fechaUtil = fechaUtil;
     }
 
@@ -62,13 +55,11 @@ public class EstacionamientoServiceImpl implements EstacionamientoService {
         RegistroEstacionamiento estacionamiento = new RegistroEstacionamiento();
         estacionamiento.setVehiculo(vehiculo);
         estacionamiento.setFechaIngreso(Calendar.getInstance().getTime());
-        RespuestaDTO respuesta = new RespuestaDTO();
+        RespuestaDTO respuesta;
         if (estacionamientoRepository.save(estacionamiento) != null) {
-            respuesta.setCodigo(CodigoMensajeEnum.EXITO.getCodigo());
-            respuesta.setMensaje(CodigoMensajeEnum.EXITO.getMensaje());
+            respuesta = new RespuestaDTO(CodigoMensajeEnum.INGRESO_EXITOSO);
         } else {
-            respuesta.setCodigo(CodigoMensajeEnum.ERROR.getCodigo());
-            respuesta.setMensaje(CodigoMensajeEnum.ERROR.getMensaje());
+            respuesta = new RespuestaDTO(CodigoMensajeEnum.ERROR);
         }
         return respuesta;
     }

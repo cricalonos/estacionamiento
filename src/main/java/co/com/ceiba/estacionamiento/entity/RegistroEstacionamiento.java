@@ -13,59 +13,73 @@ import javax.persistence.TemporalType;
 @Entity
 public class RegistroEstacionamiento {
 
-	@Id
-	@GeneratedValue
-	private Long idEstacionamiento;
+    @Id
+    @GeneratedValue
+    private Long idEstacionamiento;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaIngreso;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaIngreso;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaSalida;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaSalida;
 
-	private BigDecimal costo;
+    private BigDecimal costo;
 
-	@ManyToOne
-	private Vehiculo vehiculo;
+    @ManyToOne
+    private Vehiculo vehiculo;
 
-	public Long getIdEstacionamiento() {
-		return idEstacionamiento;
-	}
+    public RegistroEstacionamiento() {
+        super();
+    }
 
-	public void setIdEstacionamiento(Long idEstacionamiento) {
-		this.idEstacionamiento = idEstacionamiento;
-	}
+    public RegistroEstacionamiento(Long idEstacionamiento, Date fechaIngreso, Date fechaSalida, BigDecimal costo,
+            Vehiculo vehiculo) {
+        super();
+        this.idEstacionamiento = idEstacionamiento;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaSalida = fechaSalida;
+        this.costo = costo;
+        this.vehiculo = vehiculo;
+    }
 
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
+    public Long getIdEstacionamiento() {
+        return idEstacionamiento;
+    }
 
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
+    public void setIdEstacionamiento(Long idEstacionamiento) {
+        this.idEstacionamiento = idEstacionamiento;
+    }
 
-	public Date getFechaSalida() {
-		return fechaSalida;
-	}
+    public Date getFechaIngreso() {
+        return fechaIngreso;
+    }
 
-	public void setFechaSalida(Date fechaSalida) {
-		this.fechaSalida = fechaSalida;
-	}
+    public void setFechaIngreso(Date fechaIngreso) {
+        this.fechaIngreso = fechaIngreso;
+    }
 
-	public BigDecimal getCosto() {
-		return costo;
-	}
+    public Date getFechaSalida() {
+        return fechaSalida;
+    }
 
-	public void setCosto(BigDecimal costo) {
-		this.costo = costo;
-	}
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
+    }
 
-	public Vehiculo getVehiculo() {
-		return vehiculo;
-	}
+    public BigDecimal getCosto() {
+        return costo;
+    }
 
-	public void setVehiculo(Vehiculo vehiculo) {
-		this.vehiculo = vehiculo;
-	}
+    public void setCosto(BigDecimal costo) {
+        this.costo = costo;
+    }
+
+    public Vehiculo getVehiculo() {
+        return vehiculo;
+    }
+
+    public void setVehiculo(Vehiculo vehiculo) {
+        this.vehiculo = vehiculo;
+    }
 
 }

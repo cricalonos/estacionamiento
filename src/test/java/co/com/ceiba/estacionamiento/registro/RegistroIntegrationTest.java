@@ -38,7 +38,7 @@ public class RegistroIntegrationTest {
 
         // Assert
         assertEquals(HttpStatus.OK, repuesta.getStatusCode());
-        assertEquals(CodigoMensajeEnum.EXITO.getCodigo(), dto.getCodigo());
+        assertEquals(CodigoMensajeEnum.INGRESO_EXITOSO.getCodigo(), dto.getCodigo());
     }
 
     @Test

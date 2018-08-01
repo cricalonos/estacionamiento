@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.com.ceiba.estacionamiento.builder.VehiculoBuilder;
-import co.com.ceiba.estacionamiento.converter.VehiculoConverter;
 import co.com.ceiba.estacionamiento.dto.RespuestaDTO;
 import co.com.ceiba.estacionamiento.entity.RegistroEstacionamiento;
 import co.com.ceiba.estacionamiento.entity.TipoVehiculoEnum;
@@ -25,7 +24,7 @@ import co.com.ceiba.estacionamiento.exception.EstacionamientoException;
 import co.com.ceiba.estacionamiento.model.VehiculoModel;
 import co.com.ceiba.estacionamiento.repository.EstacionamientoRepository;
 import co.com.ceiba.estacionamiento.service.VehiculoService;
-import co.com.ceiba.estacionamiento.service.impl.EstacionamientoServiceImpl;
+import co.com.ceiba.estacionamiento.service.impl.IngresoVehiculoServiceImpl;
 import co.com.ceiba.estacionamiento.util.CodigoMensajeEnum;
 import co.com.ceiba.estacionamiento.util.Constantes;
 import co.com.ceiba.estacionamiento.util.FechaUtil;
@@ -42,14 +41,11 @@ public class RegistroUnitTest {
     EstacionamientoRepository estacionamientoRepository;
 
     @Mock
-    VehiculoConverter vehiculoConverter;
-
-    @Mock
     FechaUtil fechaUtil;
 
     @InjectMocks
-    EstacionamientoServiceImpl estacionamientoService = new EstacionamientoServiceImpl(vehiculoService,
-            estacionamientoRepository, vehiculoConverter, fechaUtil);
+    IngresoVehiculoServiceImpl estacionamientoService = new IngresoVehiculoServiceImpl(vehiculoService,
+            estacionamientoRepository, fechaUtil);
 
     @Test
     public void registrarIngresoSatisfactorioTest() {
@@ -63,7 +59,7 @@ public class RegistroUnitTest {
             // Act
             RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
             // Assert
-            assertEquals(CodigoMensajeEnum.EXITO.getCodigo(), respuesta.getCodigo());
+            assertEquals(CodigoMensajeEnum.INGRESO_EXITOSO.getCodigo(), respuesta.getCodigo());
         } catch (EstacionamientoException e) {
             fail();
         }
@@ -118,7 +114,7 @@ public class RegistroUnitTest {
             // Act
             RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
             // Assert
-            assertEquals(CodigoMensajeEnum.EXITO.getCodigo(), respuesta.getCodigo());
+            assertEquals(CodigoMensajeEnum.INGRESO_EXITOSO.getCodigo(), respuesta.getCodigo());
         } catch (EstacionamientoException e) {
             fail();
         }
@@ -138,7 +134,7 @@ public class RegistroUnitTest {
             // Act
             RespuestaDTO respuesta = estacionamientoService.registrarIngresoAlEstacionamiento(vehiculo);
             // Assert
-            assertEquals(CodigoMensajeEnum.EXITO.getCodigo(), respuesta.getCodigo());
+            assertEquals(CodigoMensajeEnum.INGRESO_EXITOSO.getCodigo(), respuesta.getCodigo());
         } catch (EstacionamientoException e) {
             fail();
         }
@@ -167,7 +163,8 @@ public class RegistroUnitTest {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().build();
         when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
-        when(estacionamientoRepository.findByVehiculoPlacaAndFechaSalidaNull(any())).thenReturn(new RegistroEstacionamiento());
+        when(estacionamientoRepository.findByVehiculoPlacaAndFechaSalidaNull(any()))
+                .thenReturn(new RegistroEstacionamiento());
         when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
         when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
         try {

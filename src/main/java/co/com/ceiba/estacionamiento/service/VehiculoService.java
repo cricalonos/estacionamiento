@@ -7,4 +7,6 @@ public interface VehiculoService {
 
     public abstract Vehiculo verificarVehiculo(VehiculoModel vehiculo);
 
+    public abstract VehiculoModel consultarVehiculoPorPlaca(String placa);
+
 }
