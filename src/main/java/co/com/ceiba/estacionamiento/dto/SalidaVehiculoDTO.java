@@ -9,6 +9,10 @@ public class SalidaVehiculoDTO extends RespuestaDTO {
     private String placa;
     private BigDecimal costoTotal;
 
+    public SalidaVehiculoDTO() {
+        super();
+    }
+
     public SalidaVehiculoDTO(String placa, BigDecimal costoTotal, CodigoMensajeEnum codigoMensaje) {
         super(codigoMensaje);
         this.placa = placa;
@@ -30,5 +34,4 @@ public class SalidaVehiculoDTO extends RespuestaDTO {
     public void setCostoTotal(BigDecimal costoTotal) {
         this.costoTotal = costoTotal;
     }
-
 }

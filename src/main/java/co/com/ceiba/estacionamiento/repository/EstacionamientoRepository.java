@@ -1,6 +1,7 @@
 package co.com.ceiba.estacionamiento.repository;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface EstacionamientoRepository extends JpaRepository<RegistroEstacio
     public Integer countByFechaSalidaAndVehiculoTipoVehiculo(Date fechaSalida, TipoVehiculoEnum tipoVehiculo);
 
     public RegistroEstacionamiento findByVehiculoPlacaAndFechaSalidaNull(String placa);
+
+    public List<RegistroEstacionamiento> findByFechaSalidaNull();
 }

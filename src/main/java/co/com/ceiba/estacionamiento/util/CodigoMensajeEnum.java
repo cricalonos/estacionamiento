@@ -8,7 +8,9 @@ public enum CodigoMensajeEnum {
     CILINDRAJE_ES_OBLIGATORIO("05", "Debe ingresar un cilindraje."),
     VEHICULO_YA_ESTACIONADO("06", "Este vehículo ya se encuentra en el estacionamiento."),
     SALIDA_EXITOSA("07", "Salida de vehículo registrada exitosamente."),
-    VEHICULO_NO_ESTACIONADO("08", "El vehículo no se encuentra en el estacionamiento.");
+    VEHICULO_NO_ESTACIONADO("08", "El vehículo no se encuentra en el estacionamiento."),
+    CONSULTA_EXITOSA("09", "Consulta realizada exitosamente"),
+    NO_VEHICULOS_ESTACIONADOS("10", "No hay vehículos estacionados actualmente.");
 
     private String codigo;
     private String mensaje;
