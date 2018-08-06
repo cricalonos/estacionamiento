@@ -4,7 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,32 +40,33 @@ public class EstacionamientoController {
     ConsultaVehiculoService consultaVehiculoService;
 
     @PostMapping("/registrarIngreso")
-    public RespuestaDTO registrarIngreso(@RequestBody VehiculoModel vehiculoModel) {
+    public ResponseEntity<RespuestaDTO> registrarIngreso(@RequestBody(required = true) VehiculoModel vehiculoModel) {
         try {
-            return ingresoVehiculoService.registrarIngresoAlEstacionamiento(vehiculoModel);
+            return new ResponseEntity<>(ingresoVehiculoService.registrarIngresoAlEstacionamiento(vehiculoModel),
+                    HttpStatus.OK);
         } catch (EstacionamientoException e) {
             LOGGER.error(e);
-            return new RespuestaDTO(e.getCodigo(), e.getMensaje());
+            return new ResponseEntity<>(new RespuestaDTO(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
         }
     }
 
     @GetMapping("/registrarSalida/{placa}")
-    public RespuestaDTO registrarSalida(@PathVariable String placa) {
+    public ResponseEntity<RespuestaDTO> registrarSalida(@PathVariable(required = true) String placa) {
         try {
-            return salidaVehiculoService.registrarSalidaVehiculo(placa);
+            return new ResponseEntity<>(salidaVehiculoService.registrarSalidaVehiculo(placa), HttpStatus.OK);
         } catch (EstacionamientoException e) {
             LOGGER.error(e);
-            return new RespuestaDTO(e.getCodigo(), e.getMensaje());
+            return new ResponseEntity<>(new RespuestaDTO(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
         }
     }
 
-    @GetMapping(path = "/consultarVehiculos", produces = MediaType.APPLICATION_JSON_VALUE)
-    public RespuestaDTO consultarVehiculos() {
+    @GetMapping("/consultarVehiculos")
+    public ResponseEntity<RespuestaDTO> consultarVehiculos() {
         try {
-            return consultaVehiculoService.consultarVehiculosEstacionados();
+            return new ResponseEntity<>(consultaVehiculoService.consultarVehiculosEstacionados(), HttpStatus.OK);
         } catch (EstacionamientoException e) {
             LOGGER.error(e);
-            return new RespuestaDTO(e.getCodigo(), e.getMensaje());
+            return new ResponseEntity<>(new RespuestaDTO(e.getCodigo(), e.getMensaje()), HttpStatus.OK);
         }
     }
 }

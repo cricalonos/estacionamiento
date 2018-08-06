@@ -13,7 +13,7 @@ public class VehiculoConverter {
         Vehiculo vehiculo = new Vehiculo();
         vehiculo.setPlaca(vehiculoModel.getPlaca());
         vehiculo.setTipoVehiculo(TipoVehiculoEnum.valueOf(vehiculoModel.getTipo()));
-        vehiculo.setCilindraje(vehiculoModel.getCilindraje() == null ? 0 : vehiculoModel.getCilindraje());
+        vehiculo.setCilindraje(vehiculoModel.getCilindraje());
         return vehiculo;
     }
 

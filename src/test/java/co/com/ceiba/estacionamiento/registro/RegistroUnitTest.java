@@ -51,7 +51,7 @@ public class RegistroUnitTest {
     public void registrarIngresoSatisfactorioTest() {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().build();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
+        when(estacionamientoRepository.countByFechaSalidaNullAndVehiculoTipoVehiculo(any())).thenReturn(0);
         when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
         when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
         when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
@@ -72,7 +72,7 @@ public class RegistroUnitTest {
 
         when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();
         when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any()))
+        when(estacionamientoRepository.countByFechaSalidaNullAndVehiculoTipoVehiculo(any()))
                 .thenReturn(Constantes.CAPACIDAD_MAXIMA_CARROS);
         try {
             // Act
@@ -88,7 +88,7 @@ public class RegistroUnitTest {
     public void falloPorCupoDeMotos() {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().conTipo(TipoVehiculoEnum.MOTO).build();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any()))
+        when(estacionamientoRepository.countByFechaSalidaNullAndVehiculoTipoVehiculo(any()))
                 .thenReturn(Constantes.CAPACIDAD_MAXIMA_MOTOS);
         try {
             // Act
@@ -108,7 +108,7 @@ public class RegistroUnitTest {
         fecha.set(2018, 6, 29);
         when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
         when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
+        when(estacionamientoRepository.countByFechaSalidaNullAndVehiculoTipoVehiculo(any())).thenReturn(0);
         when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
         try {
             // Act
@@ -128,7 +128,7 @@ public class RegistroUnitTest {
         fecha.set(2018, Calendar.JULY, 30);
         when(fechaUtil.obtenerFechaActual()).thenReturn(fecha);
         when(fechaUtil.validarDiaDeLaSemana(any())).thenCallRealMethod();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
+        when(estacionamientoRepository.countByFechaSalidaNullAndVehiculoTipoVehiculo(any())).thenReturn(0);
         when(estacionamientoRepository.save(any())).thenReturn(new RegistroEstacionamiento());
         try {
             // Act
@@ -162,7 +162,7 @@ public class RegistroUnitTest {
     public void falloVehiculoYaEstacionado() {
         // Arrange
         VehiculoModel vehiculo = new VehiculoBuilder().build();
-        when(estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(any(), any())).thenReturn(0);
+        when(estacionamientoRepository.countByFechaSalidaNullAndVehiculoTipoVehiculo(any())).thenReturn(0);
         when(estacionamientoRepository.findByVehiculoPlacaAndFechaSalidaNull(any()))
                 .thenReturn(new RegistroEstacionamiento());
         when(fechaUtil.obtenerFechaActual()).thenCallRealMethod();

@@ -9,7 +9,7 @@ public class EstacionamientoException extends Exception {
     private final String mensaje;
 
     public EstacionamientoException(CodigoMensajeEnum error) {
-        super();
+        super(error.getMensaje());
         this.codigo = error.getCodigo();
         this.mensaje = error.getMensaje();
     }

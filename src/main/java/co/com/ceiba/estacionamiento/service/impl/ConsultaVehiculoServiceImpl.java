@@ -14,7 +14,6 @@ import co.com.ceiba.estacionamiento.exception.EstacionamientoException;
 import co.com.ceiba.estacionamiento.model.RegistroEstacionamientoModel;
 import co.com.ceiba.estacionamiento.repository.EstacionamientoRepository;
 import co.com.ceiba.estacionamiento.service.ConsultaVehiculoService;
-import co.com.ceiba.estacionamiento.service.VehiculoService;
 import co.com.ceiba.estacionamiento.util.CodigoMensajeEnum;
 
 @Service("consultaVehiculoService")
@@ -25,19 +24,24 @@ public class ConsultaVehiculoServiceImpl implements ConsultaVehiculoService {
     private EstacionamientoRepository estacionamientoRepository;
 
     @Autowired
-    @Qualifier("vehiculoService")
-    private VehiculoService vehiculoService;
-
-    @Autowired
     @Qualifier("registroEstacionamentoConverter")
     private RegistroEstacionamentoConverter registroConverter;
 
-    public ConsultaVehiculoServiceImpl(EstacionamientoRepository estacionamientoRepository,
-            VehiculoService vehiculoService) {
+    /**
+     * Método empleado para consultar un vehículo en base de datos.
+     * 
+     * @param estacionamientoRepository Necesario para acceder a base de datos.
+     */
+    public ConsultaVehiculoServiceImpl(EstacionamientoRepository estacionamientoRepository) {
         this.estacionamientoRepository = estacionamientoRepository;
-        this.vehiculoService = vehiculoService;
     }
 
+    /**
+     * Método empleado para consultar los vehículos estacionados.
+     * 
+     * @return DTO con el resultado de la operación.
+     * @throws EstacionamientoException Lanzada en caso de ocurrir algún fallo.
+     */
     public RespuestaDTO consultarVehiculosEstacionados() throws EstacionamientoException {
         List<RegistroEstacionamiento> listaEntidad = estacionamientoRepository.findByFechaSalidaNull();
         if (listaEntidad.isEmpty())

@@ -21,6 +21,17 @@ public class VehiculoServiceImpl implements VehiculoService {
     @Qualifier("vehiculoConverter")
     VehiculoConverter vehiculoConverter;
 
+    public VehiculoServiceImpl(VehiculoRepository vehiculoRepository, VehiculoConverter vehiculoConverter) {
+        this.vehiculoRepository = vehiculoRepository;
+        this.vehiculoConverter = vehiculoConverter;
+    }
+
+    /**
+     * Método empleado para verificar si un vehículo está registrado, si no está registrado procede a registrarlo.
+     * 
+     * @param vehiculoModel vehículo a verificar.
+     * @return Entidad relacionada al vehículo verificado.
+     */
     public Vehiculo verificarVehiculo(VehiculoModel vehiculoModel) {
         Vehiculo vehiculo = vehiculoRepository.findByPlaca(vehiculoModel.getPlaca());
 
@@ -31,6 +42,12 @@ public class VehiculoServiceImpl implements VehiculoService {
         return vehiculo;
     }
 
+    /**
+     * Método encargado de consultar un vehículo por la placa.
+     * 
+     * @param placa Placa del vehículo a consultar.
+     * @return Modelo del vehículo encontrado.
+     */
     public VehiculoModel consultarVehiculoPorPlaca(String placa) {
         return vehiculoConverter.convertirEntidadAModelo(vehiculoRepository.findByPlaca(placa));
     }

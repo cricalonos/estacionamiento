@@ -25,7 +25,6 @@ import co.com.ceiba.estacionamiento.entity.TipoVehiculoEnum;
 import co.com.ceiba.estacionamiento.entity.Vehiculo;
 import co.com.ceiba.estacionamiento.exception.EstacionamientoException;
 import co.com.ceiba.estacionamiento.repository.EstacionamientoRepository;
-import co.com.ceiba.estacionamiento.service.VehiculoService;
 import co.com.ceiba.estacionamiento.service.impl.ConsultaVehiculoServiceImpl;
 import co.com.ceiba.estacionamiento.util.CodigoMensajeEnum;
 
@@ -35,17 +34,13 @@ import co.com.ceiba.estacionamiento.util.CodigoMensajeEnum;
 public class ConsultaUnitTest {
 
     @Mock
-    VehiculoService vehiculoService;
-
-    @Mock
     EstacionamientoRepository estacionamientoRepository;
 
     @Mock
     RegistroEstacionamentoConverter registroEstacionamentoConverter;
 
     @InjectMocks
-    ConsultaVehiculoServiceImpl consultaVehiculosService = new ConsultaVehiculoServiceImpl(estacionamientoRepository,
-            vehiculoService);
+    ConsultaVehiculoServiceImpl consultaVehiculosService = new ConsultaVehiculoServiceImpl(estacionamientoRepository);
 
     @Test
     public void consultaVehiculosSatisfactoriaTest() {

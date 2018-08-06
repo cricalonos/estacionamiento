@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import co.com.ceiba.estacionamiento.cupo.FactoryInfo;
+import co.com.ceiba.estacionamiento.cupo.InfoVehiculo;
 import co.com.ceiba.estacionamiento.dto.RespuestaDTO;
 import co.com.ceiba.estacionamiento.entity.RegistroEstacionamiento;
 import co.com.ceiba.estacionamiento.entity.TipoVehiculoEnum;
@@ -16,7 +18,6 @@ import co.com.ceiba.estacionamiento.repository.EstacionamientoRepository;
 import co.com.ceiba.estacionamiento.service.IngresoVehiculoService;
 import co.com.ceiba.estacionamiento.service.VehiculoService;
 import co.com.ceiba.estacionamiento.util.CodigoMensajeEnum;
-import co.com.ceiba.estacionamiento.util.Constantes;
 import co.com.ceiba.estacionamiento.util.FechaUtil;
 
 @Service("ingresoVehiculoService")
@@ -33,6 +34,13 @@ public class IngresoVehiculoServiceImpl implements IngresoVehiculoService {
     @Autowired
     private FechaUtil fechaUtil;
 
+    /**
+     * Constructor de la clase.
+     * 
+     * @param vehiculoService           Servicios de los vehículos necesarios para acceder a base de datos.
+     * @param estacionamientoRepository Repositorio para acceder a los registros del estacionamiento.
+     * @param fechaUtil                 Utilitario empleado para el manejo de las fechas.
+     */
     public IngresoVehiculoServiceImpl(VehiculoService vehiculoService,
             EstacionamientoRepository estacionamientoRepository, FechaUtil fechaUtil) {
         this.vehiculoService = vehiculoService;
@@ -40,6 +48,13 @@ public class IngresoVehiculoServiceImpl implements IngresoVehiculoService {
         this.fechaUtil = fechaUtil;
     }
 
+    /**
+     * Método empleado para registrar un vehículo al estacionamiento
+     * 
+     * @param vehiculoModel Modelo con los datos necesarios para el registro.
+     * @return DTO que contiene el resultado de la operación.
+     * @throws EstacionamientoException En caso de algún fallo en el proceso.F
+     */
     public RespuestaDTO registrarIngresoAlEstacionamiento(VehiculoModel vehiculoModel) throws EstacionamientoException {
 
         if (!validarPlacaPorLetra(vehiculoModel.getPlaca()))
@@ -59,11 +74,17 @@ public class IngresoVehiculoServiceImpl implements IngresoVehiculoService {
         if (estacionamientoRepository.save(estacionamiento) != null) {
             respuesta = new RespuestaDTO(CodigoMensajeEnum.INGRESO_EXITOSO);
         } else {
-            respuesta = new RespuestaDTO(CodigoMensajeEnum.ERROR);
+            throw new EstacionamientoException(CodigoMensajeEnum.ERROR);
         }
         return respuesta;
     }
 
+    /**
+     * Método que valida la placa por letra.
+     * 
+     * @param placa Placa a validar.
+     * @return True si la placa es valida, false en caso contrario.
+     */
     private boolean validarPlacaPorLetra(String placa) {
         boolean esValido = true;
         if (placa.startsWith("A")) {
@@ -72,17 +93,19 @@ public class IngresoVehiculoServiceImpl implements IngresoVehiculoService {
         return esValido;
     }
 
-    private boolean validarEspaciosDisponibles(String tipoVehiculo) {
-        boolean hayEspacioDisponible = false;
+    /**
+     * Método empleado para validar espacions disponibles en el estacionamiento.
+     * 
+     * @param tipoVehiculo Tipo de vehículo que se estacionará.
+     * @return True si hay espacio disponible, false en caso contrario.
+     * @throws EstacionamientoException Lanzada en caso de recibir un tipo no válido.
+     */
+    private boolean validarEspaciosDisponibles(String tipoVehiculo) throws EstacionamientoException {
         TipoVehiculoEnum tipo = TipoVehiculoEnum.valueOf(tipoVehiculo);
-        Integer totalEstacionamientosUsados = estacionamientoRepository.countByFechaSalidaAndVehiculoTipoVehiculo(null,
-                tipo);
-        if (tipo == TipoVehiculoEnum.CARRO) {
-            hayEspacioDisponible = totalEstacionamientosUsados < Constantes.CAPACIDAD_MAXIMA_CARROS;
-        } else {
-            hayEspacioDisponible = totalEstacionamientosUsados < Constantes.CAPACIDAD_MAXIMA_MOTOS;
-        }
-        return hayEspacioDisponible;
+        InfoVehiculo infoVehiculo = FactoryInfo.getInfo(tipo);
+        Integer totalEstacionamientosUsados = estacionamientoRepository
+                .countByFechaSalidaNullAndVehiculoTipoVehiculo(tipo);
+        return totalEstacionamientosUsados < infoVehiculo.getMaximoCupo();
     }
 
 }

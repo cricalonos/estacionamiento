@@ -10,7 +10,8 @@ public enum CodigoMensajeEnum {
     SALIDA_EXITOSA("07", "Salida de vehículo registrada exitosamente."),
     VEHICULO_NO_ESTACIONADO("08", "El vehículo no se encuentra en el estacionamiento."),
     CONSULTA_EXITOSA("09", "Consulta realizada exitosamente"),
-    NO_VEHICULOS_ESTACIONADOS("10", "No hay vehículos estacionados actualmente.");
+    NO_VEHICULOS_ESTACIONADOS("10", "No hay vehículos estacionados actualmente."),
+    ERROR_TIPO_VEHICULO("11", "Error con el tipo de vehículo seleccionado.");
 
     private String codigo;
     private String mensaje;
