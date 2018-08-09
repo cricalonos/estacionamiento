@@ -21,4 +21,7 @@ public class FactoryInfo {
         return info;
     }
 
+    private FactoryInfo() {
+    }
+
 }

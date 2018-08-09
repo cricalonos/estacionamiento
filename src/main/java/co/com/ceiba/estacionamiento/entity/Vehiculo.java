@@ -8,36 +8,36 @@ import javax.persistence.Id;
 @Entity
 public class Vehiculo {
 
-	@Id
-	private String placa;
+    @Id
+    private String placa;
 
-	private Integer cilindraje;
+    private Integer cilindraje = 0;
 
-	@Enumerated(EnumType.STRING)
-	private TipoVehiculoEnum tipoVehiculo;
+    @Enumerated(EnumType.STRING)
+    private TipoVehiculoEnum tipoVehiculo;
 
-	public String getPlaca() {
-		return placa;
-	}
+    public String getPlaca() {
+        return placa;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
-	public Integer getCilindraje() {
-		return cilindraje;
-	}
+    public Integer getCilindraje() {
+        return cilindraje;
+    }
 
-	public void setCilindraje(Integer cilindraje) {
-		this.cilindraje = cilindraje;
-	}
+    public void setCilindraje(Integer cilindraje) {
+        this.cilindraje = cilindraje;
+    }
 
-	public TipoVehiculoEnum getTipoVehiculo() {
-		return tipoVehiculo;
-	}
+    public TipoVehiculoEnum getTipoVehiculo() {
+        return tipoVehiculo;
+    }
 
-	public void setTipoVehiculo(TipoVehiculoEnum tipoVehiculo) {
-		this.tipoVehiculo = tipoVehiculo;
-	}
+    public void setTipoVehiculo(TipoVehiculoEnum tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
+    }
 
 }
